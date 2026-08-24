@@ -47,9 +47,6 @@ target_compile_options(fxcraft PRIVATE
   -Wno-incompatible-pointer-types)
 
 set(LINKER "${CMAKE_CURRENT_SOURCE_DIR}/prizm.ld")
-if("${CMAKE_BUILD_TYPE}" STREQUAL "FastLoad")
-  set(LINKER "${CMAKE_CURRENT_SOURCE_DIR}/fastload.ld")
-endif()
 target_link_options(fxcraft PRIVATE
   -L ${CMAKE_CURRENT_SOURCE_DIR} -T ${LINKER}
   -Wl,-print-memory-usage -Wl,-Map=map -Wl,-gc-sections)
