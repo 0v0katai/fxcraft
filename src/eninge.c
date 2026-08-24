@@ -311,8 +311,8 @@ int triangleLength;
 int verticesLength;
 
 short *VRAMAddress;
-char *lightmap = 0x8C228800 + ALLOC_OFFSET; //behind z-buffer
-char *blockData = 0x8C282800 + ALLOC_OFFSET; //behind lightmap
+char *lightmap = 0x8C228800; //behind z-buffer
+char *blockData = 0x8C282800; //behind lightmap
 
 float deltaTime;
 float deltaTimeNoSlow;
@@ -409,10 +409,10 @@ color_t missingTexture[256] = {
     0x0020,0x0020,0xf01a,0xf01a,0x0020,0x0020,0xf01a,0xf01a,0x0020,0x0020,0xf01a,0xf01a,0x0020,0x0020,0xf01a,0xf01a
 };
 
-color_t *textures2 = 0x8C540000 + ALLOC_OFFSET;
-color_t *itemIcons2 = 0x8C580000 + ALLOC_OFFSET;
-color_t *assetsInputBuffer = 0x8C500000 + ALLOC_OFFSET;
-color_t *randomShit = 0x8C5B0000 + ALLOC_OFFSET;
+color_t *textures2 = 0x8C540000;
+color_t *itemIcons2 = 0x8C580000;
+color_t *assetsInputBuffer = 0x8C500000;
+color_t *randomShit = 0x8C5B0000;
 
 const static int skyboxColors[16][128] = {
 	{
@@ -12240,12 +12240,12 @@ tlsf_t tlsf;
 
 int main() 
 {
-    tlsf = tlsf_create_with_pool((char*)(0x8C400000 + ALLOC_OFFSET), 1024*1024);
+    tlsf = tlsf_create_with_pool((char*)0x8C400000, 1024*1024);
 
     VRAMAddress = (unsigned short*)GetVRAMAddress();
 
     //ZBuffer = (unsigned short *)((uintptr_t)GetSecondaryVRAMAddress() & ~1);
-    ZBuffer = 0x8C200000 + ALLOC_OFFSET;
+    ZBuffer = 0x8C200000;
 	
 	Bdisp_EnableColor(1);
 	Bdisp_AllClr_VRAM();
@@ -18643,7 +18643,7 @@ void convertToBitmap16bit()
     header[4] = (file_size >> 16) & 0xFF;
     header[5] = (file_size >> 24) & 0xFF;
 
-    unsigned char *bitmap_image = (unsigned char *)(0x8C200000 + ALLOC_OFFSET);
+    unsigned char *bitmap_image = (unsigned char *)0x8C200000;
 
     memcpy(bitmap_image, header, 14);
     memcpy(bitmap_image + 14, v5_header, 124);
@@ -28743,7 +28743,7 @@ void renderObject()
             right = CalculateRightVector(cameraRotationX, cameraRotationY);
 
             //screenPoint calculatedSPos[verticesLength]; //cg10/20
-            screenPoint *calculatedSPos = 0x8C2DC800 + ALLOC_OFFSET; //cg50
+            screenPoint *calculatedSPos = 0x8C2DC800; //cg50
 
             renderdV = 0;
             int cosRotX = fastCosine(cameraRotationX) * 1000;

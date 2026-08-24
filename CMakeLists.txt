@@ -26,12 +26,6 @@ set(ASSETS_cg
   # ...
 )
 
-# set(MPM 1)
-if(MPM OR "${CMAKE_BUILD_TYPE}" STREQUAL "FastLoad")
-  set(ALLOC_OFFSET 0x100000)
-else()
-  set(ALLOC_OFFSET 0x0)
-endif()
 configure_file(src/config.h.in include/config.h)
 fxconv_declare_assets(${ASSETS} ${ASSETS_fx} ${ASSETS_cg} WITH_METADATA)
 

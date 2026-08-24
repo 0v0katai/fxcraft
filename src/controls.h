@@ -1,10 +1,6 @@
 #include "config.h"
 
-#if MPM
-# define _(cg,cw) cw
-#else
-# define _(cg,cw) cg
-#endif
+#define _(cg,cw) (TARGET == cg ? cg : cw)
 
 void keyupdate(void);
 int keydownlast(int basic_keycode);

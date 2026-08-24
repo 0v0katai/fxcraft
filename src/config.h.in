@@ -1,7 +1,8 @@
 #ifndef FXCRAFT_CONFIG
 #define FXCRAFT_CONFIG
 
-#cmakedefine01 MPM
-#cmakedefine ALLOC_OFFSET @ALLOC_OFFSET@
+#define cg 0
+#define cw 1
+#define TARGET @TARGET@
 
 #endif
