@@ -48,5 +48,5 @@ target_link_libraries(fxcraft PRIVATE -lc -lgcc -lsyscall-${TARGET})
 
 if("${FXSDK_PLATFORM_LONG}" STREQUAL fxCG50)
   generate_g3a(TARGET fxcraft OUTPUT "Minecraft-fx.g3a"
-    NAME "Minecraft-fx" ICONS assets/icon-uns.png assets/icon-sel.png)
+    NAME "Minecraft-fx" ICONS icon-uns.png icon-sel.png)
 endif()
