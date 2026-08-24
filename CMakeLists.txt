@@ -53,13 +53,7 @@ endif()
 target_link_options(fxcraft PRIVATE
   -L ${CMAKE_CURRENT_SOURCE_DIR} -T ${LINKER}
   -Wl,-print-memory-usage -Wl,-Map=map -Wl,-gc-sections)
-
-if(MPM)
-  target_link_libraries(fxcraft PRIVATE -lcw)
-else()
-  target_link_libraries(fxcraft PRIVATE -lcg)
-endif()
-target_link_libraries(fxcraft PRIVATE -lc -lgcc)
+target_link_libraries(fxcraft PRIVATE -lc -lgcc -lsyscall-${TARGET})
 
 if("${FXSDK_PLATFORM_LONG}" STREQUAL fxCG50)
   generate_g3a(TARGET fxcraft OUTPUT "Minecraft-fx.g3a"
