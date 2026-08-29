@@ -9,7 +9,7 @@ set(SOURCES
   src/compression.c
   src/controls.c
   src/DMA_Transfer.c
-  src/eninge.c
+  src/engine.c
   src/fastBdisp.c
   src/lz4.c
   src/tlsf.c
@@ -36,15 +36,13 @@ include_directories(fxcraft PRIVATE
 target_compile_options(fxcraft PRIVATE
   -fdata-sections -Ofast -fschedule-insns -w
   -flto=auto -fno-strict-aliasing -DNDEBUG
-  -Wno-implicit-function-declaration
-  -Wno-int-conversion
-  -Wno-incompatible-pointer-types)
+  -Wno-implicit-function-declaration)
 
 set(LINKER "${CMAKE_CURRENT_SOURCE_DIR}/prizm.ld")
 target_link_options(fxcraft PRIVATE
   -L ${CMAKE_CURRENT_SOURCE_DIR} -T ${LINKER}
   -Wl,-print-memory-usage -Wl,-Map=map -Wl,-gc-sections)
-target_link_libraries(fxcraft PRIVATE -lc -lgcc -lsyscall-${TARGET})
+target_link_libraries(fxcraft PRIVATE -lc -lgcc -lsyscall-${PLATFORM})
 
 if("${FXSDK_PLATFORM_LONG}" STREQUAL fxCG50)
   generate_g3a(TARGET fxcraft OUTPUT "Minecraft-fx.g3a"
