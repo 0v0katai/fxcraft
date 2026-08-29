@@ -13,8 +13,6 @@
 #define tlsf_decl static
 #endif
 
-typedef long ptrdiff_t;  
-
 /*
 ** Architecture-specific bit manipulation routines.
 **

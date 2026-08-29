@@ -1,7 +1,7 @@
-#include "casiowin.h"
+#include "fxcg/heap.h"
 #include <unistd.h>
 
-size_t write(int fd, void const *buf, size_t count)
+ssize_t write(int fd, const void *buf, size_t count)
 {
     (void)fd;
     (void)buf;
