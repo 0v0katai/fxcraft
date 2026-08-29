@@ -1,5 +1,6 @@
 #include <fxcg/display.h>
 #include "fastBdisp.h"
+#include "config.h"
 
 #define LCD_GRAM    0x202
 #define LCD_BASE    0xB4000000
@@ -12,6 +13,21 @@
 #define DMA0_DAR_0  (volatile unsigned*)0xFE008024
 #define DMA0_TCR_0  (volatile unsigned*)0xFE008028
 #define DMA0_CHCR_0 (volatile unsigned*)0xFE00802C
+
+static volatile unsigned short *DISPLAY = (void *)LCD_BASE;
+
+void SelectVRAMDataRegister(void){
+    if(PLATFORM == cw){
+        Bdisp_DDRegisterSelect(0xDA);
+        if(*DISPLAY == 0x32 || *DISPLAY == 0x52)
+            Bdisp_DDRegisterSelect(0x2C);
+        else
+            Bdisp_DDRegisterSelect(LCD_GRAM);
+    }
+    else{
+        Bdisp_DDRegisterSelect(LCD_GRAM);
+    }
+}
 
 void DmaWaitNext(void){
     while(1){
@@ -27,7 +43,7 @@ void DmaWaitNext(void){
 void DoDMAlcdNonblockStrip(unsigned y1,unsigned y2){
     Bdisp_WriteDDRegister3_bit7(1);
     Bdisp_DefineDMARange(6,389,y1,y2);
-    Bdisp_DDRegisterSelect(LCD_GRAM);
+    SelectVRAMDataRegister();
 
     *MSTPCR0&=~(1<<21);//Clear bit 21
     *DMA0_CHCR_0&=~1;//Disable DMA on channel 0
@@ -49,7 +65,7 @@ void DoDMAlcdNonblockStripXramStart(unsigned y1,unsigned y2)
 {
     Bdisp_WriteDDRegister3_bit7(1);
     Bdisp_DefineDMARange(6,389,y1,y2);
-    Bdisp_DDRegisterSelect(LCD_GRAM);
+    SelectVRAMDataRegister();
 }
 
 void DoDMAlcdNonblockStripXram(unsigned y1,unsigned y2)
@@ -57,7 +73,7 @@ void DoDMAlcdNonblockStripXram(unsigned y1,unsigned y2)
     *MSTPCR0&=~(1<<21);//Clear bit 21
     *DMA0_CHCR_0&=~1;//Disable DMA on channel 0
     *DMA0_DMAOR=0;//Disable all DMA
-    *DMA0_SAR_0=YRAM;//Source address is VRAM
+    *DMA0_SAR_0=(unsigned)YRAM;//Source address is VRAM
     *DMA0_DAR_0=LCD_BASE&0x1FFFFFFF;//Destination is LCD
     *DMA0_TCR_0=((y2-y1+1)*384)/16;//Transfer count bytes/32
     //*DMA0_CHCR_0=0x00101400;
