@@ -1,7 +1,5 @@
 #include "config.h"
 
-#define _(cg,cw) (TARGET == cg ? cg : cw)
-
 void keyupdate(void);
 int keydownlast(int basic_keycode);
 int keydownhold(int basic_keycode);

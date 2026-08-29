@@ -3,6 +3,7 @@
 
 #define cg 0
 #define cw 1
-#define TARGET @TARGET@
+#define PLATFORM @PLATFORM@
+#define _(CG,CW) (PLATFORM == cg ? CG : CW)
 
 #endif
