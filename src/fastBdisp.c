@@ -17,16 +17,11 @@
 static volatile unsigned short *DISPLAY = (void *)LCD_BASE;
 
 void SelectVRAMDataRegister(void){
-    if(PLATFORM == cw){
-        Bdisp_DDRegisterSelect(0xDA);
-        if(*DISPLAY == 0x32 || *DISPLAY == 0x52)
-            Bdisp_DDRegisterSelect(0x2C);
-        else
-            Bdisp_DDRegisterSelect(LCD_GRAM);
-    }
-    else{
+    Bdisp_DDRegisterSelect(0xDA);
+    if(*DISPLAY == 0x32 || *DISPLAY == 0x52)
+        Bdisp_DDRegisterSelect(0x2C);
+    else
         Bdisp_DDRegisterSelect(LCD_GRAM);
-    }
 }
 
 void DmaWaitNext(void){
